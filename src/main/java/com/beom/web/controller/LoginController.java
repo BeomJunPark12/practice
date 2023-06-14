@@ -19,11 +19,19 @@ public class LoginController {
 
     private final UserService userService;
 
+    /**
+     * 로그인 화면으로 이동
+     */
+
     @GetMapping("user/login")
     public String loginForm(Model model) {
         model.addAttribute("loginForm", new LoginForm());
         return "user/loginForm";
     }
+
+    /**
+     * 로그인 처리
+     */
 
     @PostMapping("user/login")
     public String login(@Valid LoginForm form, BindingResult result) {
