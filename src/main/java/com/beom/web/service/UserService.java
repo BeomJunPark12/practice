@@ -1,7 +1,5 @@
 package com.beom.web.service;
 
-import com.beom.web.controller.LoginForm;
-import com.beom.web.controller.UserForm;
 import com.beom.web.entity.User;
 import com.beom.web.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.beom.web.controller;
+package com.beom.web.controller.user;
 
 import lombok.Getter;
 import lombok.Setter;
