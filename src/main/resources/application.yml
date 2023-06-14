@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: beom
+    password: root1234
+    url: jdbc:mysql://localhost:3306/jpa?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+#        show_sql: true
+        format_sql: true
+
+  logging.level:
+    org.hibernate.SQL: debug
+
+
+
