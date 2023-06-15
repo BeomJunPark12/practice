@@ -19,6 +19,4 @@ public class UserForm {
     @NotBlank(message = "이름을 입력해 주세요")
     private String name;
 
-    @NotNull(message = "숫자를 입력해 주세요")
-    private Integer age;
 }

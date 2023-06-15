@@ -49,6 +49,7 @@ public class UserService {
 
     /**
      * 로그인
+     * @return null 로그인 실패
      */
 
     public User login(String loginId, String password) {

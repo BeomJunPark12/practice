@@ -46,7 +46,7 @@ public class UserController {
                 .loginId(userForm.getLoginId())
                 .password(userForm.getPassword())
                 .name(userForm.getName())
-                .age(userForm.getAge()).build();
+                .build();
 
         userService.join(user);
         return "redirect:/";

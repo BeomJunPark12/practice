@@ -20,13 +20,12 @@ public class User {
     private String loginId;
     private String password;
     private String name;
-    private Integer age;
+
 
     @Builder
-    public User(String loginId, String password, String name, Integer age) {
+    public User(String loginId, String password, String name) {
         this.loginId = loginId;
         this.password = password;
         this.name = name;
-        this.age = age;
     }
 }
