@@ -11,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -35,19 +37,38 @@ public class LoginController {
      */
 
     @PostMapping("user/login")
-    public String login(@Valid LoginForm form, BindingResult result) {
+    public String login(@Valid LoginForm form, BindingResult result, HttpServletRequest request) {
 
         if (result.hasErrors()) {
             log.info("result: " + result);
             return "/user/loginForm";
         }
 
-        User login = userService.login(form.getLoginId(), form.getPassword());
+        User loginUser = userService.login(form.getLoginId(), form.getPassword());
 
-        if (login == null) {
+        if (loginUser == null) {
             log.info("로그인 실패");
             result.reject("loginFail", "아이디 또는 비밀번호가 일치하지 않습니다.");
             return "user/loginForm";
+        }
+
+        // 세션 생성
+        HttpSession session = request.getSession();
+
+        // 세션 저장
+        session.setAttribute(SessionConst.LOGIN_USER, loginUser);
+        return "redirect:/";
+    }
+
+    /**
+     * 로그아웃
+     */
+    @GetMapping("/user/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+            session.invalidate();
         }
         return "redirect:/";
     }
