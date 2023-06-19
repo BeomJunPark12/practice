@@ -18,13 +18,7 @@ public class HomeController {
 //    }
 
     @GetMapping("/")
-    public String loginHome(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
-
-        if (loginUser == null) {
-            return "home";
-        }
-
-        model.addAttribute("user", loginUser);
-        return "loginHome";
+    public String loginHome() {
+        return "home";
     }
 }
