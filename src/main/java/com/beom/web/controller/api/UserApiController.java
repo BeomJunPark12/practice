@@ -7,6 +7,7 @@ import com.beom.web.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +25,7 @@ public class UserApiController {
      * 회원가입
      */
 
-    @PostMapping("/api/user")
+    @PostMapping("/auth/joinProc")
     public ResponseDto<Integer> join(@RequestBody UserDto userDto) {
 
         log.info("회원가입 메서드 호출" + userDto);
@@ -32,19 +33,5 @@ public class UserApiController {
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
-    /**
-     * 로그인
-     */
 
-    @PostMapping("/api/login")
-    public ResponseDto<Integer> login(@RequestBody UserDto userDto, HttpSession session) {
-        User principal = userService.login(userDto);
-        log.info("로그인 메서드 호출" + principal);
-
-
-        if (principal != null) {
-            session.setAttribute("principal", principal);
-        }
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
-    }
 }

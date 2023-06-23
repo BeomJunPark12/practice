@@ -1,5 +1,6 @@
 package com.beom.web.model;
 
+import com.beom.web.dto.UserDto;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -7,7 +8,8 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 public class User {
@@ -32,9 +34,17 @@ public class User {
     private Timestamp createDate;
 
 
-    //==회원 가입시 롤 부여==//
-    public void updateRole(Role role) {
-        this.role = role;
+    //==회원가입==//
+    public static User join(UserDto userDto) {
+
+        User user = User.builder()
+                .username(userDto.getUsername())
+                .password(userDto.getPassword())
+                .name(userDto.getName())
+                .role(Role.USER)
+                .build();
+
+        return user;
     }
 
     //==사용자 수정==//
