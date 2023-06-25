@@ -1,15 +1,16 @@
 package com.beom.web.service;
 
-import com.beom.web.entity.Board;
-import com.beom.web.entity.User;
+import com.beom.web.dto.BoardForm;
+import com.beom.web.model.Board;
+import com.beom.web.model.User;
 import com.beom.web.repository.BoardRepository;
-import com.beom.web.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -17,48 +18,41 @@ import java.util.Optional;
 public class BoardService {
 
     private final BoardRepository boardRepository;
-    private final UserRepository userRepository;
 
     /**
-     * 게시글 작성
+     * 글쓰기
+     * @param boardForm
+     * @param user
      */
-    @Transactional
-    public Long register(String title, String content, Long userId) {
-        User user = userRepository.findOne(userId).orElseThrow();
 
-        Board board = Board.createBoard(title, content, user);
+    @Transactional
+    public void write(BoardForm boardForm, User user) {
+        Board board = Board.save(boardForm, user);
         boardRepository.save(board);
-        return board.getId();
     }
 
     /**
-     * 게시글 전체 조회
+     * 글목록
      */
-    public List<Board> findAll() {
-        return boardRepository.findAll();
+    public Page<Board> list(Pageable pageable) {
+        return boardRepository.findAll(pageable);
     }
 
     /**
-     * 게시글 단건 조회
+     * 글 상세보기
      */
-    public Optional<Board> findOne(Long id) {
-        return boardRepository.findById(id);
+    public Board boardView(Long id) {
+        return boardRepository.findById(id)
+                .orElseThrow(()-> {
+                    return new IllegalArgumentException("해당 글을 찾을 수 없습니다.");
+                });
     }
 
     /**
-     * 게시글 수정
-     */
-    @Transactional
-    public void updateBoard(Long id, String title, String content) {
-        Board board = boardRepository.findById(id).orElseThrow();
-        board.update(title, content);
-    }
-
-    /**
-     * 게시글 삭제
+     * 글삭제
      */
     @Transactional
-    public void deleteById(Long id) {
+    public void delete(Long id) {
         boardRepository.deleteById(id);
     }
 }

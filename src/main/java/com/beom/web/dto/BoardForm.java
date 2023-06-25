@@ -1,5 +1,7 @@
 package com.beom.web.dto;
 
+import com.beom.web.model.Board;
+import com.beom.web.model.User;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,4 +18,6 @@ public class BoardForm {
     private String title;
 
     private String content;
+
+
 }

@@ -1,18 +1,22 @@
 package com.beom.web.controller;
 
-import com.beom.web.controller.board.BoardForm;
-import com.beom.web.entity.Board;
-import com.beom.web.entity.User;
+import com.beom.web.dto.BoardForm;
+import com.beom.web.model.Board;
 import com.beom.web.service.BoardService;
+import com.beom.web.validator.BoardValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Optional;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,12 +28,14 @@ public class BoardController {
     /**
      * 게시판 홈
      */
+    @GetMapping("board/list")
+    public String boardList(Model model, @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC)
+    Pageable pageable) {
 
-    @GetMapping("/board")
-    public String board(Model model) {
-        model.addAttribute("list", boardService.findAll());
-        return "board/board";
+        model.addAttribute("boards", boardService.list(pageable));
+        return "board/boardList";
     }
+
 
     /**
      * 글 쓰기 폼
@@ -42,65 +48,13 @@ public class BoardController {
     }
 
     /**
-     * 글 쓰기
+     * 글 상세보기
      */
 
-    @PostMapping("/board/write")
-    public String createBoard(@Valid BoardForm boardForm, BindingResult result,
-                              @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
-        if (result.hasErrors()) {
-            log.info("errors = {}", result);
-            return "board/boardForm";
-        }
-        System.out.println("loginUser = " + loginUser);
-        boardService.register(boardForm.getTitle(), boardForm.getContent(), loginUser.getId());
-        return "redirect:/board";
-    }
+    @GetMapping("board/detail/{id}")
+    public String boardDetail(@PathVariable Long id, Model model) {
+        model.addAttribute("board", boardService.boardView(id));
+        return "board/boardDetail";
 
-    /**
-     * 게시글 상세 보기
-     */
-    @GetMapping("/board/view/{id}")
-    public String boardView(@PathVariable Long id, Model model) {
-
-        log.info("boardView");
-        Board board = boardService.findOne(id).orElseThrow();
-        model.addAttribute("board", board);
-
-        return "board/boardView";
-    }
-
-    /**
-     * 게시글 수정
-     */
-
-    @GetMapping("/board/update/{id}")
-    public String updateForm(@PathVariable Long id, Model model) {
-        Board board = boardService.findOne(id).orElseThrow();
-
-        BoardForm boardForm = new BoardForm();
-        boardForm.setTitle(board.getTitle());
-        boardForm.setContent(board.getContent());
-
-        model.addAttribute("boardForm", boardForm);
-        model.addAttribute("id", id);
-
-        return "board/updateForm";
-    }
-
-    @PostMapping("/board/update/{id}")
-    public String update(@PathVariable Long id, BoardForm boardForm) {
-        boardService.updateBoard(id, boardForm.getTitle(), boardForm.getContent());
-        return "redirect:/board/view/" + id;
-    }
-
-    /**
-     * 게시글 삭제
-     */
-
-    @PostMapping("/board/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        boardService.deleteById(id);
-        return "redirect:/board";
     }
 }

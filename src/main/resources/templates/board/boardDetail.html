@@ -7,7 +7,12 @@
 
 <div class="container">
   <h3 class="text-center">글 상세보기</h3>
-  <form th:action th:object="${board}" method="post">
+  <form th:object="${board}">
+    <div>
+      글번호: <span id="id"><i th:text="${board.id}"></i></span><br>
+      작성자: <span><i th:text="${board.user.username}"></i></span>
+    </div>
+    <br>
 
     <div class="mb-3">
       <label th:for="title" class="form-label">제목</label>
@@ -19,11 +24,16 @@
       <textarea class="form-control" th:field="*{content}" rows="10"></textarea>
     </div>
 
-    <div class="text-right">
-      <a type="button" class="btn btn-primary" th:href="@{/board/list}">목록</a>
-      <a type="button" class="btn btn-primary" th:href="@{/board/update/{id}(id=${board.id})}">글수정</a>
-    </div>
   </form>
+    <div class="text-right">
+      <button type="button" class="btn btn-primary" th:onclick="history.back()">목록</button>
+      <button type="button" class="btn btn-warning" id="btn-update">수정</button>
+      <div th:if="${board.user.username == principal}">
+      <button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
+      </div>
+    </div>
 </div>
+<script th:src="@{/js/board.js}"></script>
+
 </body>
 </html>
