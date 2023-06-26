@@ -55,4 +55,16 @@ public class BoardService {
     public void delete(Long id) {
         boardRepository.deleteById(id);
     }
+
+    /**
+     * 글수정
+     */
+    @Transactional
+    public void update(Long id, BoardForm boardForm) {
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> {
+                   return new IllegalArgumentException("글수정 실패: 글을 찾을 수 없습니다.");
+                }); // 영속화 완료
+        board.update(boardForm);// 해당 함수 종료시에 트랜잭션이 종료된다 이 때 더티체킹 일어남
+    }
 }

@@ -55,6 +55,15 @@ public class BoardController {
     public String boardDetail(@PathVariable Long id, Model model) {
         model.addAttribute("board", boardService.boardView(id));
         return "board/boardDetail";
+    }
 
+    /**
+     * 글수정
+     */
+    @GetMapping("board/update/{id}")
+    public String updateForm(@PathVariable Long id, Model model) {
+        model.addAttribute("board", boardService.boardView(id));
+
+        return "board/updateForm";
     }
 }

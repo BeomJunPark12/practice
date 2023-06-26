@@ -39,4 +39,16 @@ class BoardApiController {
         boardService.delete(id);
         return new ResponseDto<>(HttpStatus.OK.value(), 1);
     }
+
+    /**
+     * 글수정
+     */
+    @PutMapping("/api/board/{id}")
+    public ResponseDto<Integer> update(@PathVariable Long id, @RequestBody BoardForm boardForm) {
+        System.out.println("id = " + id);
+        System.out.println("boardForm = " + boardForm.getTitle());
+        System.out.println("boardForm = " + boardForm.getContent());
+        boardService.update(id, boardForm);
+        return new ResponseDto<>(HttpStatus.OK.value(), 1);
+    }
 }

@@ -49,4 +49,9 @@ public class Board {
                 .build();
     }
 
+    //==글수정==//
+    public void update(BoardForm boardForm) {
+        this.title = boardForm.getTitle();
+        this.content = boardForm.getContent();
+    }
 }

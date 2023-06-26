@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/common :: header(글조회)">
 </head>
 <body>
@@ -16,21 +16,20 @@
 
     <div class="mb-3">
       <label th:for="title" class="form-label">제목</label>
-      <input type="text" class="form-control" th:field="*{title}">
+      <input type="text" class="form-control" th:field="*{title}" readonly>
     </div>
 
     <div class="mb-3">
       <label th:for="content" class="form-label">내용</label>
-      <textarea class="form-control" th:field="*{content}" rows="10"></textarea>
+      <textarea class="form-control" th:field="*{content}" rows="10" readonly></textarea>
     </div>
-
   </form>
     <div class="text-right">
       <button type="button" class="btn btn-primary" th:onclick="history.back()">목록</button>
-      <button type="button" class="btn btn-warning" id="btn-update">수정</button>
-      <div th:if="${board.user.username == principal}">
+      <span th:if="${#authentication.principal.username == board.user.username}">
+      <a type="button" class="btn btn-warning" th:href="@{/board/update/{id}(id=${board.id})}">수정</a>
       <button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
-      </div>
+      </span>
     </div>
 </div>
 <script th:src="@{/js/board.js}"></script>
