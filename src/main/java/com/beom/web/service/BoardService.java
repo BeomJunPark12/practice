@@ -1,9 +1,14 @@
 package com.beom.web.service;
 
 import com.beom.web.dto.BoardForm;
+import com.beom.web.dto.ReplyDto;
+import com.beom.web.dto.UserDto;
 import com.beom.web.model.Board;
+import com.beom.web.model.Reply;
 import com.beom.web.model.User;
 import com.beom.web.repository.BoardRepository;
+import com.beom.web.repository.ReplyRepository;
+import com.beom.web.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +23,8 @@ import java.util.List;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final ReplyRepository replyRepository;
+    private final UserRepository userRepository;
 
     /**
      * 글쓰기
@@ -66,5 +73,28 @@ public class BoardService {
                    return new IllegalArgumentException("글수정 실패: 글을 찾을 수 없습니다.");
                 }); // 영속화 완료
         board.update(boardForm);// 해당 함수 종료시에 트랜잭션이 종료된다 이 때 더티체킹 일어남
+    }
+
+    /**
+     * 댓글쓰기
+     */
+
+    @Transactional
+    public void replyWrite(ReplyDto replyDto) {
+
+        Board board = boardRepository.findById(replyDto.getBoardId())
+                .orElseThrow(()-> {
+                    return new IllegalArgumentException("댓글 쓰기 실패: 게시글 id를 찾을 수 없습니다.");
+                }); // 영속화 완료
+
+        User user = userRepository.findById(replyDto.getUserId())
+                .orElseThrow(()-> {
+                    return new IllegalArgumentException("댓글 쓰기 실패: 유저 id를 찾을 수 없습니다.");
+                }); // 영속화 완료
+
+        Reply reply = new Reply();
+        reply.save(user, board, replyDto);
+
+        replyRepository.save(reply);
     }
 }

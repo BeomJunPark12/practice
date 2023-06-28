@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.beom.web.config.auth.PrincipalDetail;
 import com.beom.web.dto.BoardForm;
+import com.beom.web.dto.ReplyDto;
 import com.beom.web.dto.ResponseDto;
 import com.beom.web.model.Board;
+import com.beom.web.model.Reply;
 import com.beom.web.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -46,6 +48,16 @@ class BoardApiController {
     @PutMapping("/api/board/{id}")
     public ResponseDto<Integer> update(@PathVariable Long id, @RequestBody BoardForm boardForm) {
         boardService.update(id, boardForm);
+        return new ResponseDto<>(HttpStatus.OK.value(), 1);
+    }
+
+    /**
+     * 댓글쓰기
+     */
+    @PostMapping("/api/board/{boardId}/reply")
+    public ResponseDto<Integer> replyWrite(@RequestBody ReplyDto replyDto) {
+
+        boardService.replyWrite(replyDto);
         return new ResponseDto<>(HttpStatus.OK.value(), 1);
     }
 }

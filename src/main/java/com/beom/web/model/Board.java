@@ -1,6 +1,5 @@
 package com.beom.web.model;
 
-import com.beom.web.config.auth.PrincipalDetail;
 import com.beom.web.dto.BoardForm;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
