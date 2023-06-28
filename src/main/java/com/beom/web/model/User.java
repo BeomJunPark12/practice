@@ -48,8 +48,7 @@ public class User {
     }
 
     //==사용자 수정==//
-    public void updateUser(String password, String name) {
+    public void updateUser(String password) {
         this.password = password;
-        this.name = name;
     }
 }

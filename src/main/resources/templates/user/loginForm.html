@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="fragments/common :: header(로그인)">
   <meta charset="UTF-8">
   <link rel="stylesheet" th:href="@{/css/loginForm.css}">
   <title>로그인</title>
 </head>
-<body>
+<div th:replace="fragments/common :: menu('home')"></div>
+
+<body class="text-center">
+
 <div class="container">
-  <form th:action th:object="${loginForm}" method="post">
-    <h3>로그인</h3>
-
-    <div th:if="${#fields.hasGlobalErrors()}">
-      <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
-    </div>
-
-    <label for="loginId">
-      <input type="text" name="name" id="loginId" th:field="*{loginId}" placeholder="아이디"
-             th:errorclass="field-error">
-      <div class="field-error" th:errors="*{loginId}"/>
-    </label>
-
-    <label for="password">
-      <input type="password" name="password" id="password" th:field="*{password}" placeholder="비밀번호"
-             th:errorclass="field-error">
-      <div class="field-error" th:errors="*{password}"/>
-    </label>
-
-    <button type="submit">로그인</button>
-    <button type="button" th:onclick="|location.href='@{/}'|">취소</button>
-
-  </form>
+<form class="form-signin" th:action="@{/auth/loginProc}" method="post">
+  <img class="mb-4" src="https://getbootstrap.com/docs/4.6/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+<div th:if="${param.error}" class="alert alert-danger" role="alert">
+아이디 또는 비밀번호가 일치하지 않습니다.
 </div>
+<div th:if="${param.logout}" class="alert alert-primary" role="alert">
+로그아웃
+</div>
+  <label for="username" class="sr-only">아이디</label>
+  <input type="text" id="username" name="username" class="form-control" placeholder="아이디" required autofocus>
+  <label for="password" class="sr-only">비밀번호</label>
+  <input type="password" id="password" name="password" class="form-control" placeholder="비밀번호" required>
+  <div class="checkbox mb-3">
+    <label>
+      <input type="checkbox" value="remember-me" name="remember"> Remember me
+    </label>
+  </div>
+  <button id="btn-login" class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
+</form>
+  <p class="mt-5 mb-3 text-muted">&copy; 범준 🇰🇷</p>
+</div>
+<script th:src="@{/js/user.js}"></script>
 </body>
 </html>

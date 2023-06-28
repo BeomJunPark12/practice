@@ -23,26 +23,28 @@
       <div class="collapse navbar-collapse" id="navbarsExample03">
         <ul class="navbar-nav me-auto mb-2 mb-sm-0">
           <li class="nav-item" th:classappend="${menu} == 'home' ? 'active': ''">
-            <a class="nav-link" aria-current="page" href="#" th:href="@{/}">Home <span class="sr-only" th:if="${menu} == 'home'">(current)</span></a>
+            <a class="nav-link" aria-current="page" th:href="@{/}">Home <span class="sr-only" th:if="${menu} == 'home'">(current)</span></a>
           </li>
           <li class="nav-item" th:classappend="${menu} == 'board' ? 'active': ''">
-            <a class="nav-link" href="#" th:href="@{/board/list}">게시판 <span class="sr-only" th:if="${menu} == 'board'">(current)</span></a>
+            <a class="nav-link" th:href="@{/board/list}">게시판 <span class="sr-only" th:if="${menu} == 'board'">(current)</span></a>
           </li>
-          <li class="nav-item" th:classappend="${menu} == 'join' ? 'active': ''">
-            <a class="nav-link" href="#" th:href="@{/auth/joinForm}">회원가입 <span class="sr-only" th:if="${menu} == 'join'">(current)</span></a>
+          <li class="nav-item" sec:authorize="!isAuthenticated()" th:classappend="${menu} == 'join' ? 'active': ''">
+            <a class="nav-link" aria-current="page" th:href="@{/auth/joinForm}">회원가입 <span class="sr-only" th:if="${menu} == 'join'">(current)</span></a>
+          </li>
+          <li class="nav-item" sec:authorize="isAuthenticated()" th:classappend="${menu} == 'update' ? 'active': ''">
+            <a class="nav-link" aria-current="page" th:href="@{/user/updateForm}">회원수정 <span class="sr-only" th:if="${menu} == 'join'">(current)</span></a>
           </li>
         </ul>
+      </div>
 
           <a class="btn btn-secondary my-2 my-sm-0" th:href="@{/auth/loginForm}"
           sec:authorize="!isAuthenticated()">로그인</a>
 
-        <form  sec:authorize="isAuthenticated()">
+        <div sec:authorize="isAuthenticated()">
           <span class="text-white mx-2" sec:authentication="name">사용자</span>
-          <span class="text-white mx-2" sec:authentication="principal.authorities">권한</span>
           <a class="btn btn-secondary my-2 my-sm-0" th:href="@{/logout}">로그아웃</a>
-        </form>
+        </div>
 
-      </div>
     </div>
   </nav>
 </body>

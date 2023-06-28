@@ -1,5 +1,7 @@
 package com.beom.web.model;
 
+import com.beom.web.dto.ReplyDto;
+import com.beom.web.dto.UserDto;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -8,7 +10,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
@@ -30,4 +32,11 @@ public class Reply {
 
     @CreationTimestamp
     private Timestamp createDate;
+
+    //==댓글작성==//
+    public void save(User user, Board board, ReplyDto replyDto) {
+        this.user = user;
+        this.board = board;
+        this.content = replyDto.getContent();
+    }
 }

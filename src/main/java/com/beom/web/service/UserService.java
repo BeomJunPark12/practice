@@ -21,8 +21,6 @@ public class UserService {
 
     /**
      * 회원가입
-     *
-     * @param userDto
      */
     @Transactional
     public void join(UserDto userDto) {
@@ -33,6 +31,21 @@ public class UserService {
         userDto.setPassword(encPassword);
         User user = User.join(userDto);
         userRepository.save(user);
+    }
+
+    /**
+     * 회원수정 비밀번호만
+     */
+    @Transactional
+    public void update(UserDto userDto) {
+        User user = userRepository.findById(userDto.getId())
+                .orElseThrow(()-> {
+                    return new IllegalArgumentException("회원 수정 실패");
+                });
+        String rawPassword = userDto.getPassword();
+        String encPassword = encoder.encode(rawPassword);
+
+        user.updateUser(encPassword);
     }
 }
 
