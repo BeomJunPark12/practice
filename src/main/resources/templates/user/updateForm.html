@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common :: header(회원수정)">
+</head>
+<body>
+<div th:replace="fragments/common :: menu('home')"></div>
+
+  <div class="container">
+    <form>
+      <h3>회원 수정</h3>
+      <input type="hidden" id="id" th:value="${#authentication.principal.user.id}">
+      <label>
+        <input type="text" name="username" id="username" th:value="${#authentication.principal.username}" readonly>
+      </label>
+
+      <label for="password">
+        <input type="password" name="password" id="password" placeholder="비밀번호">
+      </label>
+    </form>
+      <div >
+      <button class="btn btn-primary" id="btn-update" type="button">회원수정</button>
+      </div>
+  </div>
+<script th:src="@{/js/user.js}"></script>
+</body>
+</html>
