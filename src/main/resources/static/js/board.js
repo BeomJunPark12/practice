@@ -16,6 +16,7 @@ let index = {
         $("#btn-reply-save").on("click", ()=> {
             this.replySave();
         });
+
     },
 
     save:function () {
@@ -47,7 +48,6 @@ let index = {
                 url:"/api/board/" + id,
                 dataType:"json"
             }).done(function (resp){
-                console.log(resp);
                 alert("삭제가 완료되었습니다.");
                 location.href="/board/list";
             }).fail(function (error){
@@ -96,6 +96,21 @@ let index = {
             console.log(resp);
             alert("댓글작성이 완료되었습니다.");
             location.href = `/board/detail/${data.boardId}`;
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
+    },
+
+    replyDelete:function (boardId, replyId) {
+
+        $.ajax({
+            type: "DELETE",
+            url: `/api/board/${boardId}/reply/${replyId}`,
+            dataType: "json"
+        }).done(function (resp) {
+            console.log(resp);
+            alert("댓글삭제 성공.");
+            location.href = `/board/detail/${boardId}`;
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
