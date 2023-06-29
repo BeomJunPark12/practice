@@ -97,4 +97,13 @@ public class BoardService {
 
         replyRepository.save(reply);
     }
+
+    /**
+     * 댓글 삭제
+     * @param replyId
+     */
+    @Transactional
+    public void replyDelete(Long replyId) {
+        replyRepository.deleteById(replyId);
+    }
 }
