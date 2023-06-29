@@ -7,13 +7,12 @@ import com.beom.web.config.auth.PrincipalDetail;
 import com.beom.web.dto.BoardForm;
 import com.beom.web.dto.ReplyDto;
 import com.beom.web.dto.ResponseDto;
-import com.beom.web.model.Board;
-import com.beom.web.model.Reply;
 import com.beom.web.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -59,5 +58,14 @@ class BoardApiController {
 
         boardService.replyWrite(replyDto);
         return new ResponseDto<>(HttpStatus.OK.value(), 1);
+    }
+
+    /**
+     * 댓글 삭제
+     */
+    @DeleteMapping("/api/board/{boardId}/reply/{replyId}")
+    public ResponseDto<Integer> replyDelete(@PathVariable Long replyId) {
+        boardService.replyDelete(replyId);
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 }
