@@ -1,5 +1,5 @@
 # 개발 환경
-- Java jdk11, SpringBoot, Jpa, Mysql, Intellj
+- Java jdk11, SpringBoot, Jpa, Mysql, Intellj, thymeleaf
 - 스프링 시큐리티, 로그인, 게시판
 
 
