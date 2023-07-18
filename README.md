@@ -10,15 +10,15 @@
 - [시큐리티 세션 저장](https://github.com/BeomJunPark12/practice/blob/f449c68b48913a0e4a24c1f6cd95f7bbdd3e7123/src/main/java/com/beom/web/config/auth/PrincipalDetailService.java#L21)
 
 ## 회원가입
--[회원가입](https://github.com/BeomJunPark12/practice/blob/f449c68b48913a0e4a24c1f6cd95f7bbdd3e7123/src/main/java/com/beom/web/service/UserService.java#L26) - DB에 비밀번호가 암호화돼서 저장된다.
+[회원가입](https://github.com/BeomJunPark12/practice/blob/f449c68b48913a0e4a24c1f6cd95f7bbdd3e7123/src/main/java/com/beom/web/service/UserService.java#L26) - DB에 비밀번호가 암호화돼서 저장된다.
 
 <img width="656" alt="스크린샷 2023-07-18 오전 10 28 55" src="https://github.com/BeomJunPark12/practice/assets/118503208/ae94a3f0-f10b-47c8-b508-0f8e777db505">
 
 ## 회원수정
--[세션값 변경](https://github.com/BeomJunPark12/practice/blob/f449c68b48913a0e4a24c1f6cd95f7bbdd3e7123/src/main/java/com/beom/web/controller/api/UserApiController.java#L52) - ajax로 값을 바꿨기 때문에 화면에 바로 반영이 안될 수 있음 -> 세션을 강제로 변경한다(덮어씌우기)
+[세션값 변경](https://github.com/BeomJunPark12/practice/blob/f449c68b48913a0e4a24c1f6cd95f7bbdd3e7123/src/main/java/com/beom/web/controller/api/UserApiController.java#L52) - ajax로 값을 바꿨기 때문에 화면에 바로 반영이 안될 수 있음 -> 세션을 강제로 변경한다(덮어씌우기)
 
 ## 더티체킹
--[글수정](https://github.com/BeomJunPark12/practice/blob/f449c68b48913a0e4a24c1f6cd95f7bbdd3e7123/src/main/java/com/beom/web/service/BoardService.java#L70) - 영속성 컨텍스트를 보관할 때 최초의 상태를 복사해서 저장해둠 -> 트랜잭션이 끝나고 flush할 때 값을 비교해 변경된 부분을 update, save함수를 안써도 알아서 값을 변경해준다.
+[글수정](https://github.com/BeomJunPark12/practice/blob/f449c68b48913a0e4a24c1f6cd95f7bbdd3e7123/src/main/java/com/beom/web/service/BoardService.java#L70) - 영속성 컨텍스트를 보관할 때 최초의 상태를 복사해서 저장해둠 -> 트랜잭션이 끝나고 flush할 때 값을 비교해 변경된 부분을 update, save함수를 안써도 알아서 값을 변경해준다.
 
 # 구현화면
 ## 게시판
